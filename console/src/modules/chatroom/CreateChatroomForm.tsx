@@ -141,7 +141,7 @@ export const CreateChatroomForm: React.FC<CreateChatroomFormProps> = ({
             disabled={!isFormValid(values)}
             startIcon={
               isSubmitting ? (
-                <CircularProgress color="inherit" sx={{ fontSize: "1em" }} />
+                <CircularProgress color="inherit" size="1em" />
               ) : null
             }
           >

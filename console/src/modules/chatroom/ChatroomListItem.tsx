@@ -12,6 +12,7 @@ import { useState } from "react";
 
 import { ChatroomDataFragment } from "~src/codegen/graphql";
 import { ChatroomTags } from "./ChatroomTags";
+import { ChatroomDetails } from "./ChatroomDetails";
 
 const ChatroomCard = styled(Card)<CardProps>(({ theme }) => ({
   display: "flex",
@@ -50,12 +51,7 @@ export const ChatroomListItem: React.FC<ChatroomListItemProps> = ({
         </IconButton>
       </Box>
       <Collapse in={showDetails}>
-        <Card sx={{ padding: 2 }}>
-          <Typography variant="body1">Description</Typography>
-          <Typography variant="body2">
-            {chatroom.description ?? "No description provided."}
-          </Typography>
-        </Card>
+        <ChatroomDetails chatroom={chatroom} />
       </Collapse>
     </ChatroomCard>
   );
