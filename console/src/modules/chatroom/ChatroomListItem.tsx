@@ -13,6 +13,7 @@ import { useState } from "react";
 import { ChatroomDataFragment } from "~src/codegen/graphql";
 import { ChatroomTags } from "./ChatroomTags";
 import { ChatroomDetails } from "./ChatroomDetails";
+import { ResolveToggle } from "./ResolveToggle";
 
 const ChatroomCard = styled(Card)<CardProps>(({ theme }) => ({
   display: "flex",
@@ -46,10 +47,20 @@ export const ChatroomListItem: React.FC<ChatroomListItemProps> = ({
             callerPhoneNumber={chatroom.callerPhoneNumber}
           />
         </Box>
-        <IconButton onClick={() => setShowDetails(!showDetails)}>
-          {showDetails ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
-        </IconButton>
+
+        <Box
+          display="flex"
+          alignItems="flex-start"
+          justifyContent="space-between"
+        >
+          <IconButton onClick={() => setShowDetails(!showDetails)}>
+            {showDetails ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+          </IconButton>
+
+          <ResolveToggle chatroomId={chatroom.id} resolved={chatroom.resolved} />
+        </Box>
       </Box>
+
       <Collapse in={showDetails}>
         <ChatroomDetails chatroom={chatroom} />
       </Collapse>
