@@ -1,6 +1,7 @@
+import { Reference } from "@apollo/client";
 import {
   ArchivedChatroomsListDocument,
-  ChatroomDataFragment,
+  ChatroomDataFragmentDoc,
   ChatroomsListDocument,
   useToggleChatroomResolvedMutation,
 } from "~src/codegen/graphql";
@@ -10,33 +11,51 @@ export function useToggleChatroomResolved() {
     update(cache, { data }) {
       cache.modify({
         fields: {
-          chatrooms(existingChatrooms: ChatroomDataFragment[] = [], { storeFieldName }) {
-            if (!data?.toggleChatroomResolved) return existingChatrooms
+          chatrooms(existingChatroomRefs: Reference[] = [], { storeFieldName, readField }) {
+            if (!data?.toggleChatroomResolved) return existingChatroomRefs
 
             const updatedChatroom = data.toggleChatroomResolved.chatroom
 
+            const updatedChatroomRef = cache.writeFragment({
+              data: updatedChatroom,
+              fragment: ChatroomDataFragmentDoc,
+              fragmentName: 'ChatroomData',
+            })
+
+            if (!updatedChatroomRef) return existingChatroomRefs
+
+            const listWithUpdatedRef = existingChatroomRefs.some(
+              ref => readField('id', ref) === updatedChatroom.id,
+            ) ? existingChatroomRefs : [updatedChatroomRef, ...existingChatroomRefs]
+
+            const listWithoutUpdatedRef = existingChatroomRefs.filter(
+              ref => readField('id', ref) !== updatedChatroom.id,
+            )
+
             if (storeFieldName === 'chatrooms({"resolved":true})') {
               if (updatedChatroom.resolved) {
-                return [updatedChatroom, ...existingChatrooms]
+                return listWithUpdatedRef
               } else {
-                return existingChatrooms.filter(chatroom => chatroom.id !== updatedChatroom.id)
+                return listWithoutUpdatedRef
               }
             }
 
             if (storeFieldName === 'chatrooms') {
               if (updatedChatroom.resolved) {
-                return existingChatrooms.filter(chatroom => chatroom.id !== updatedChatroom.id)
+                return listWithoutUpdatedRef
               } else {
-                return [updatedChatroom, ...existingChatrooms]
+                return listWithUpdatedRef
               }
             }
+
+            return existingChatroomRefs
           }
         }
-      });
+      })
     },
     onQueryUpdated(observableQuery) {
-      return observableQuery.refetch();
+      return observableQuery.refetch()
     },
     refetchQueries: [ChatroomsListDocument, ArchivedChatroomsListDocument],
-  });
+  })
 }
