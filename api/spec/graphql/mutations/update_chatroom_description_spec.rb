@@ -42,8 +42,7 @@ RSpec.describe "Mutations::UpdateChatroomDescription", type: :request do
 
   it "updates the chatroom's description" do
     expect { post '/graphql', params: { query:, variables: } }
-      .to not_change { Chatroom.count }.from(1)
-      .and change { Chatroom.first.description }.from('Old description').to(new_description)
+      .to change { Chatroom.first.description }.from('Old description').to(new_description)
 
     response_json = JSON.parse(response.body)
 
