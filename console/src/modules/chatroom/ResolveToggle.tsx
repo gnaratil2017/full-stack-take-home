@@ -1,11 +1,13 @@
 import { CheckCircle, CheckCircleOutline } from "@mui/icons-material";
 import {
+  Alert,
   Button,
   CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
+  DialogTitle,
   IconButton,
   Tooltip,
 } from "@mui/material";
@@ -22,13 +24,18 @@ export const ResolveToggle: React.FC<ResolveToggleProps> = ({
   resolved,
 }) => {
   const [open, setOpen] = useState(false);
-  const [toggleChatroomResolved, { loading }] = useToggleChatroomResolved()
+  const [toggleChatroomResolved, { loading, error, reset }] = useToggleChatroomResolved();
 
-  const handleClose = () => setOpen(false);
-
-  const handleConfirm = async () => {
-    await toggleChatroomResolved({ variables: { chatroomId, resolved: !resolved } });
+  const handleClose = () => {
     setOpen(false);
+    reset();
+  }
+
+  const handleConfirm = () => {
+    toggleChatroomResolved({
+      variables: { chatroomId, resolved: !resolved },
+      onCompleted: handleClose,
+    });
   };
 
   return (
@@ -40,6 +47,12 @@ export const ResolveToggle: React.FC<ResolveToggleProps> = ({
       </Tooltip>
 
       <Dialog open={open} onClose={handleClose}>
+        {error && <Alert severity="error">We're sorry, something went wrong. Please try again.</Alert>}
+
+        <DialogTitle>
+          {resolved ? 'Unresolve chatroom?' : 'Resolve chatroom?'}
+        </DialogTitle>
+
         <DialogContent>
           <DialogContentText>
             {`Are you sure you want to mark this chatroom as ${resolved ? 'unresolved' : 'resolved'}?`}
@@ -47,9 +60,10 @@ export const ResolveToggle: React.FC<ResolveToggleProps> = ({
         </DialogContent>
 
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose} disabled={loading}>Cancel</Button>
           <Button
             onClick={handleConfirm}
+            disabled={loading}
             startIcon={
               loading ? (
                 <CircularProgress color="inherit" size="1em" />

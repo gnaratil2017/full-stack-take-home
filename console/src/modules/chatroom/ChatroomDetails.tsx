@@ -29,7 +29,8 @@ export const ChatroomDetails: React.FC<ChatroomDetailsProps> = ({
         <DescriptionForm
           chatroomId={chatroom.id}
           description={chatroom.description ?? undefined}
-          handleClose={() => setIsEditing(false)} />
+          handleClose={() => setIsEditing(false)}
+        />
       ) : (
         <Typography variant="body2">{chatroom.description ?? "No description provided."}</Typography>
       )}
