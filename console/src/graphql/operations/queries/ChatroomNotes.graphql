@@ -1,0 +1,5 @@
+query ChatroomNotes($chatroomId: ID!) {
+  chatroomNotes(chatroomId: $chatroomId) {
+    ...ChatroomNoteData
+  }
+}
