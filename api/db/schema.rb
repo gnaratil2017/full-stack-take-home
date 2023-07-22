@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_17_132218) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_22_165206) do
+  create_table "chatroom_notes", force: :cascade do |t|
+    t.text "content", null: false
+    t.integer "chatroom_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chatroom_id"], name: "index_chatroom_notes_on_chatroom_id"
+  end
+
   create_table "chatrooms", force: :cascade do |t|
     t.string "label", null: false
     t.string "caller_phone_number", null: false
@@ -28,5 +36,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_17_132218) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "chatroom_notes", "chatrooms"
   add_foreign_key "chatrooms", "nature_codes"
 end
