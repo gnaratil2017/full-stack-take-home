@@ -57,7 +57,7 @@ export const ChatroomListItem: React.FC<ChatroomListItemProps> = ({
             {showDetails ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
           </IconButton>
 
-          <ResolveToggle chatroomId={chatroom.id} resolved={chatroom.resolved} />
+          <ResolveToggle chatroomId={chatroom.id} isResolved={chatroom.resolved} />
         </Box>
       </Box>
 

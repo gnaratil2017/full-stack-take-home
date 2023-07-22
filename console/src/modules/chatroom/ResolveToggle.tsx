@@ -16,12 +16,12 @@ import { useToggleChatroomResolved } from "./useToggleChatroomResolved";
 
 export type ResolveToggleProps = {
   chatroomId: string;
-  resolved: boolean;
+  isResolved: boolean;
 };
 
 export const ResolveToggle: React.FC<ResolveToggleProps> = ({
   chatroomId,
-  resolved,
+  isResolved,
 }) => {
   const [open, setOpen] = useState(false);
   const [toggleChatroomResolved, { loading, error, reset }] = useToggleChatroomResolved();
@@ -33,16 +33,16 @@ export const ResolveToggle: React.FC<ResolveToggleProps> = ({
 
   const handleConfirm = () => {
     toggleChatroomResolved({
-      variables: { chatroomId, resolved: !resolved },
+      variables: { chatroomId, resolved: !isResolved },
       onCompleted: handleClose,
     });
   };
 
   return (
     <>
-      <Tooltip title={resolved ? 'Unresolve' : 'Resolve'}>
+      <Tooltip title={isResolved ? 'Unresolve' : 'Resolve'}>
         <IconButton onClick={() => setOpen(true)}>
-          {resolved ? <CheckCircle /> : <CheckCircleOutline />}
+          {isResolved ? <CheckCircle /> : <CheckCircleOutline />}
         </IconButton>
       </Tooltip>
 
@@ -50,12 +50,12 @@ export const ResolveToggle: React.FC<ResolveToggleProps> = ({
         {error && <Alert severity="error">We're sorry, something went wrong. Please try again.</Alert>}
 
         <DialogTitle>
-          {resolved ? 'Unresolve chatroom?' : 'Resolve chatroom?'}
+          {`${isResolved ? 'Unresolve' : 'Resolve'} chatroom?`}
         </DialogTitle>
 
         <DialogContent>
           <DialogContentText>
-            {`Are you sure you want to mark this chatroom as ${resolved ? 'unresolved' : 'resolved'}?`}
+            {`Are you sure you want to mark this chatroom as ${isResolved ? 'unresolved' : 'resolved'}?`}
           </DialogContentText>
         </DialogContent>
 
