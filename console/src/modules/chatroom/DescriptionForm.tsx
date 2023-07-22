@@ -70,7 +70,7 @@ export const DescriptionForm: React.FC<DescriptionFormProps> = ({
               ) : null
             }
           >
-            Submit
+            Save
           </Button>
         </Box>
       </form>
