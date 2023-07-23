@@ -62,7 +62,7 @@ export const ChatroomListItem: React.FC<ChatroomListItemProps> = ({
       </Box>
 
       <Collapse in={showDetails}>
-        <ChatroomDetails chatroom={chatroom} />
+        {showDetails && <ChatroomDetails chatroom={chatroom} />}
       </Collapse>
     </ChatroomCard>
   );

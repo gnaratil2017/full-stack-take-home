@@ -48,7 +48,7 @@ export const CreateNoteForm: React.FC<CreateNoteFormProps> = ({
           autoFocus
         />
 
-        <Box display="flex" justifyContent="flex-end" marginTop={4} gap={1}>
+        <Box display="flex" justifyContent="flex-end" marginTop={1} gap={1}>
           <Button
             size="small"
             variant="text"
