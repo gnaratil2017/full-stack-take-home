@@ -1,6 +1,5 @@
 import { CheckCircle, CheckCircleOutline } from "@mui/icons-material";
 import {
-  Alert,
   Button,
   CircularProgress,
   Dialog,
@@ -13,6 +12,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useToggleChatroomResolved } from "./useToggleChatroomResolved";
+import { ErrorBanner } from "~src/modules/shared/ErrorBanner";
 
 export type ResolveToggleProps = {
   chatroomId: string;
@@ -47,7 +47,7 @@ export const ResolveToggle: React.FC<ResolveToggleProps> = ({
       </Tooltip>
 
       <Dialog open={open} onClose={handleClose}>
-        {error && <Alert severity="error">We're sorry, something went wrong. Please try again.</Alert>}
+        {error && <ErrorBanner />}
 
         <DialogTitle>
           {`${isResolved ? 'Unresolve' : 'Resolve'} chatroom?`}

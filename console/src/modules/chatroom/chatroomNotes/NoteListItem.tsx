@@ -1,6 +1,5 @@
 import { DeleteOutline } from "@mui/icons-material";
 import {
-  Alert,
   Box,
   Button,
   Card,
@@ -19,6 +18,7 @@ import { format, parseISO } from 'date-fns';
 
 import { ChatroomNoteDataFragment } from "~src/codegen/graphql";
 import { useDeleteChatroomNote } from "./useDeleteChatroomNote";
+import { ErrorBanner } from "~src/modules/shared/ErrorBanner";
 
 export type NoteListItemProps = {
   note: ChatroomNoteDataFragment;
@@ -65,7 +65,7 @@ export const NoteListItem: React.FC<NoteListItemProps> = ({ note, chatroomId }) 
       </Card>
 
       <Dialog open={open} onClose={handleClose}>
-        {error && <Alert severity="error">We're sorry, something went wrong. Please try again.</Alert>}
+        {error && <ErrorBanner />}
 
         <DialogTitle>Delete Note?</DialogTitle>
 

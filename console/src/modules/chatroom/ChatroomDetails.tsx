@@ -3,7 +3,7 @@ import { Box, Card, IconButton, Typography } from "@mui/material";
 import { DescriptionForm } from "./DescriptionForm";
 import { useState } from "react";
 import { ChatroomDataFragment } from "~src/codegen/graphql";
-import { NotesList } from "./chatroomNotes";
+import { NotesSection } from "./chatroomNotes";
 
 export type ChatroomDetailsProps = {
   chatroom: ChatroomDataFragment;
@@ -39,7 +39,7 @@ export const ChatroomDetails: React.FC<ChatroomDetailsProps> = ({
       </Card>
 
       <Card sx={{ padding: 2 }}>
-        <NotesList chatroom={chatroom} />
+        <NotesSection chatroom={chatroom} />
       </Card>
     </>
   );

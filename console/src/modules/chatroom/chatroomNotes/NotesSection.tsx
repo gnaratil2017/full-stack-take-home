@@ -1,19 +1,20 @@
 import { AddComment } from "@mui/icons-material";
-import { Box, Button, CircularProgress, Typography } from "@mui/material";
+import { Alert, Box, Button, CircularProgress, Typography } from "@mui/material";
 import { useState } from "react";
 
 import { ChatroomDataFragment, useChatroomNotesQuery } from "~src/codegen/graphql";
 import { NoteListItem } from "./NoteListItem";
 import { CreateNoteForm } from "./CreateNoteForm";
+import { ErrorBanner } from "~src/modules/shared/ErrorBanner";
 
-export type NotesListProps = {
+export type NotesSectionProps = {
   chatroom: ChatroomDataFragment;
 };
 
-export const NotesList: React.FC<NotesListProps> = ({ chatroom }) => {
+export const NotesSection: React.FC<NotesSectionProps> = ({ chatroom }) => {
   const [isCreating, setIsCreating] = useState(false)
 
-  const { data, loading } = useChatroomNotesQuery({ variables: { chatroomId: chatroom.id  }});
+  const { data, loading, error } = useChatroomNotesQuery({ variables: { chatroomId: chatroom.id  }});
 
   const chatroomNotes = data?.chatroomNotes ?? [];
 
@@ -36,14 +37,22 @@ export const NotesList: React.FC<NotesListProps> = ({ chatroom }) => {
 
       {isCreating && <CreateNoteForm chatroomId={chatroom.id} handleClose={() => setIsCreating(false)} />}
 
+      {error && <ErrorBanner customMessage="We're sorry, we were unable to fetch the notes." />}
+
       {loading ? (
         <Box display="flex" alignItems="center" justifyContent="center">
           <CircularProgress />
         </Box>
       ) : (
-        chatroomNotes.map((note) => (
-          <NoteListItem key={note.id} note={note} chatroomId={chatroom.id} />
-        ))
+        <>
+          {chatroomNotes.length === 0 && !isCreating && !error && (
+            <Alert severity="info" variant="outlined">No notes.</Alert>
+          )}
+
+          {chatroomNotes.map((note) => (
+            <NoteListItem key={note.id} note={note} chatroomId={chatroom.id} />
+          ))}
+        </>
       )}
     </Box>
   );

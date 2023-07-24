@@ -1,6 +1,7 @@
-import { Alert, Box, Button, CircularProgress, TextField } from "@mui/material";
+import { Box, Button, CircularProgress, TextField } from "@mui/material";
 import { useState } from "react";
 import { ChatroomNotesDocument, useCreateChatroomNoteMutation } from "~src/codegen/graphql";
+import { ErrorBanner } from "~src/modules/shared/ErrorBanner";
 
 export type CreateNoteFormProps = {
   chatroomId: string;
@@ -33,7 +34,7 @@ export const CreateNoteForm: React.FC<CreateNoteFormProps> = ({
 
   return (
     <>
-      {error && <Alert severity="error">We're sorry, something went wrong. Please try again.</Alert>}
+      {error && <ErrorBanner />}
 
       <form onSubmit={handleSubmit}>
         <TextField
