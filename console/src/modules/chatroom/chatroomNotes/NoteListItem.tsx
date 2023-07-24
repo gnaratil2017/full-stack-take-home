@@ -22,7 +22,7 @@ import { ErrorBanner } from "~src/modules/shared/ErrorBanner";
 
 export type NoteListItemProps = {
   note: ChatroomNoteDataFragment;
-  chatroomId: string
+  chatroomId: string;
 };
 
 export const NoteListItem: React.FC<NoteListItemProps> = ({ note, chatroomId }) => {

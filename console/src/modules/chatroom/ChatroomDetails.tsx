@@ -38,8 +38,8 @@ export const ChatroomDetails: React.FC<ChatroomDetailsProps> = ({
         )}
       </Card>
 
-      <Card sx={{ padding: 2 }}>
-        <NotesSection chatroom={chatroom} />
+      <Card sx={{ padding: 2, marginTop: 1 }}>
+        <NotesSection chatroomId={chatroom.id} />
       </Card>
     </>
   );
