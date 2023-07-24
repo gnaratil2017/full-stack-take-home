@@ -1,0 +1,8 @@
+fragment ChatroomNoteData on ChatroomNote {
+  id
+  content
+  chatroom {
+    ...ChatroomData
+  }
+  createdAt
+}

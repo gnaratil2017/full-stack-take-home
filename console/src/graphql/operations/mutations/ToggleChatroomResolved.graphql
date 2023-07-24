@@ -1,0 +1,15 @@
+mutation ToggleChatroomResolved(
+  $chatroomId: ID!
+  $resolved: Boolean!
+) {
+  toggleChatroomResolved(
+    input: {
+      chatroomId: $chatroomId
+      resolved: $resolved
+    }
+  ) {
+    chatroom {
+      ...ChatroomData
+    }
+  }
+}

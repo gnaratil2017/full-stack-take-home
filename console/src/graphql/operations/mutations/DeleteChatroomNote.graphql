@@ -1,0 +1,13 @@
+mutation DeleteChatroomNote(
+  $noteId: ID!
+) {
+  deleteChatroomNote(
+    input: {
+      noteId: $noteId
+    }
+  ) {
+    chatroomNote {
+      ...ChatroomNoteData
+    }
+  }
+}
