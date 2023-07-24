@@ -28,7 +28,7 @@ export const CreateNoteForm: React.FC<CreateNoteFormProps> = ({
 
     createChatroomNote({
       variables: { chatroomId, content: contentValue.trim() },
-      onCompleted: () => handleClose(),
+      onCompleted: handleClose,
     })
   };
 

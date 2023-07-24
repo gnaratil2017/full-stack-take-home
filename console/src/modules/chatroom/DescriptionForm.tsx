@@ -28,7 +28,7 @@ export const DescriptionForm: React.FC<DescriptionFormProps> = ({
 
     updateChatroomDescription({
       variables: { chatroomId, newDescription: descriptionValue },
-      onCompleted: () => handleClose(),
+      onCompleted: handleClose,
     })
   };
 
